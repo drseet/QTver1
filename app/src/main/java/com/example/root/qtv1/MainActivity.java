@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
         timePick = (TimePicker) findViewById(R.id.timePicker);
         Calendar c = Calendar.getInstance();
 
+        //minute in which quiet time ends
         int endMin = timePick.getCurrentMinute();
+        //the current time in mins
         int curMin = c.get(Calendar.MINUTE);
 
         Intent qt = new Intent(MainActivity.this, QT.class);
@@ -72,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
         qt_mins = qt_mins - 3;
         qt_mins = qt_mins*60000;
 
+        //subtract 45 seconds to allow for the final chime
+        // to occur before the class bell
+        qt_mins = qt_mins - 45000;
+
+        //signify the beginning of QT       (*****maybe change from ringtone?*****)
+        alert();
+
         new CountDownTimer(qt_mins, 1000){
             Intent warn = new Intent(MainActivity.this, ThreeMinWarning.class);
             public void onTick(long millisUntilFinished) {}
@@ -82,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(warn);
             }
         } .start();
+
 /*
 This currently isn't working, and really isn't necessary. Keeping it here in case it becomes relevant
 in the future.

@@ -10,7 +10,7 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +19,11 @@
         </activity>
         <activity android:name=".QT" />
         <activity android:name=".ThreeMinWarning" />
-        <activity android:name=".Help"></activity>
+        <activity android:name=".Help" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Done" />
+        <activity android:name=".Register" />
+        <activity android:name=".Admin"></activity>
     </application>
 
 </manifest>
