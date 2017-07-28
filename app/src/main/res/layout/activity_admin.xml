@@ -10,12 +10,13 @@
         android:id="@+id/delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="delete user"
-        tools:layout_constraintTop_creator="1"
         android:layout_marginTop="36dp"
+        android:onClick="onDeleteTap"
+        android:text="delete user"
+        app:layout_constraintLeft_toLeftOf="@+id/username"
         app:layout_constraintTop_toBottomOf="@+id/username"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/username" />
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/header"
