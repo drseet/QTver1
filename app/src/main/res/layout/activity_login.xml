@@ -79,14 +79,16 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="19dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="16dp"
+        android:onClick="onAdminTap"
         android:text="Admin"
         android:visibility="invisible"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"

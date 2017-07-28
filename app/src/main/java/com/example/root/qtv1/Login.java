@@ -55,25 +55,7 @@ public class Login extends AppCompatActivity {
         }
         return null;
     }
-    
-    /*store user credentials, username is title and hashed pw in contents*/
-    private void storeUser(String user, String pw) {
-        //set filename as username for ease and such
-        String CREDFILE = user;            //use filename for find method later
-        //if no password entered, return
-        if(pw == null)
-            return;
-        //hash password
-        pw = hash(pw);
-        //save password
-        try {
-            FileOutputStream fos = openFileOutput(CREDFILE, Context.MODE_PRIVATE);
-            fos.write(pw.getBytes());
-            fos.close();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
+
     private boolean userFound(Context context, String username) {
         File file = context.getFileStreamPath(username);
         if(file.exists()){
