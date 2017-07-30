@@ -17,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Register extends AppCompatActivity {
 
-    String usr, pw;
+    String usr, pw, pw2;
     EditText emailInput, passInput, passInput2;
     MessageDigest md;
 
@@ -71,14 +71,18 @@ public class Register extends AppCompatActivity {
     public void onRegTap(View v){
         usr = new String();
         pw = new String();
+        pw2 = new String();
 
-        //collect username input
+        //collect user input
         usr = emailInput.getText().toString();
+        pw = passInput.getText().toString();
+        pw2 = passInput2.getText().toString();
 
         //ensure password entries match, otherwise prompt user to retry
-        if(passInput != passInput2){
+        if(!pw.equals(pw2)){
             Toast noMatch = Toast.makeText(getApplicationContext(),
-                    "Passwords do not match! Please try again", Toast.LENGTH_LONG);
+                    "Passwords do not match! Please try again"+
+                            pw +"/"+ pw2, Toast.LENGTH_LONG);
             noMatch.show();
         }
         else {
@@ -87,6 +91,8 @@ public class Register extends AppCompatActivity {
 
             //save username and password in private file
             storeUser(usr, pw);
+
+            Toast.makeText(getApplicationContext(), "stored!", Toast.LENGTH_LONG);
 
             //return to login screen
             Intent ret = new Intent(Register.this, Login.class);

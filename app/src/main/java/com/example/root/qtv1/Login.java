@@ -97,6 +97,11 @@ public class Login extends AppCompatActivity {
                     "Username not found! Please create an account", Toast.LENGTH_LONG);
             test.show();
         }
+        else{
+            Intent start = new Intent(Login.this, MainActivity.class);
+            startActivity(start);
+        }
+
     }
 
 }

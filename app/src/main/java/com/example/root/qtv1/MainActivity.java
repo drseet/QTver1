@@ -1,5 +1,6 @@
 package com.example.root.qtv1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -7,9 +8,15 @@ import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.Hashtable;
 
@@ -17,7 +24,9 @@ import java.util.Hashtable;
 public class MainActivity extends AppCompatActivity {
 
     //flags when first countdown timer has finished (3 min warning)
-    public boolean isDone = false;
+    boolean isDone = false;
+    Login log = new Login();
+    String username = this.log.usr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     Records time and stored in Hashtable and passes the hashtable to be stored
     in a private file on the device.
     */
-    public Hashtable recordTime(int time) {
+    public void recordTime(int time) {
         int i = 0;
 
         Hashtable<String, Integer> quietTimes =
@@ -61,10 +70,24 @@ public class MainActivity extends AppCompatActivity {
             while(!quietTimes.isEmpty())
                 if(quietTimes.containsKey("qt" + ++i) == false);
                     quietTimes.put("qt"+i, time);
-        return quietTimes;
+
+        storeTime(quietTimes, this.username);
+    }
+    public void storeTime(Hashtable quietTimes, String username) {
+        try {
+            FileOutputStream fos = openFileOutput(username+"_qt_records", Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(quietTimes);
+            os.close();
+            Log.v("QT", "File written");
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.v("QT", "File not written");
+        }
+        Toast.makeText(getApplicationContext(), "error: "+Log.VERBOSE, Toast.LENGTH_LONG).show();
     }
 
-    //add method to collect total and avg times using the hashtable
+    // **** add method to collect total and avg times using the hashtable ****
 
 
 
@@ -103,13 +126,7 @@ public class MainActivity extends AppCompatActivity {
         // to occur before the class bell
         qt_mins = qt_mins - 45000;
 
-        /*
-        STORE THE qt_mins in 2 files: add the number to the number contained in username_total
-        and append the file username_times
-
-        storeTimes()
-        */
-
+        recordTime(qt_mins);
 
         //signify the beginning of QT       (*****maybe change from ringtone?*****)
         alert();
