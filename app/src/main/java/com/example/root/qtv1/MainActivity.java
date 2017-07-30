@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
+import java.util.Hashtable;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +43,30 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    /*
+    Records time and stored in Hashtable and passes the hashtable to be stored
+    in a private file on the device.
+    */
+    public Hashtable recordTime(int time) {
+        int i = 0;
+
+        Hashtable<String, Integer> quietTimes =
+                new Hashtable<>();
+
+        /*
+        keeping track of each quiet time session (qt) and use an iterator (i)
+        to determine what session we're on so we know where to hash the data
+        */
+        if(quietTimes.containsKey("qt1"))
+            while(!quietTimes.isEmpty())
+                if(quietTimes.containsKey("qt" + ++i) == false);
+                    quietTimes.put("qt"+i, time);
+        return quietTimes;
+    }
+
+    //add method to collect total and avg times using the hashtable
+
+
 
     /*
     When the user taps the start button, Calendar is used to collect the current time
@@ -77,6 +102,14 @@ public class MainActivity extends AppCompatActivity {
         //subtract 45 seconds to allow for the final chime
         // to occur before the class bell
         qt_mins = qt_mins - 45000;
+
+        /*
+        STORE THE qt_mins in 2 files: add the number to the number contained in username_total
+        and append the file username_times
+
+        storeTimes()
+        */
+
 
         //signify the beginning of QT       (*****maybe change from ringtone?*****)
         alert();
