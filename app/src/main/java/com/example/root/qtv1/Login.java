@@ -86,7 +86,7 @@ public class Login extends AppCompatActivity {
                 pw = passInput.getText().toString();
         }
 
-        //check if admin, if admin: delete user button visible
+        //check if admin, if admin: delete user button visible --------> move to main screen ******
         if (usr == "admin" && pw == "admin") {
             //make delete user/ admin button visible to allow user to access admin screen
             adminButton.setVisibility(View.VISIBLE);

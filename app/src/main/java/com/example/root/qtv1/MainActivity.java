@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             Log.v("QT", "File not written");
         }
-        Toast.makeText(getApplicationContext(), "error: "+Log.VERBOSE, Toast.LENGTH_LONG).show();
     }
 
     // **** add method to collect total and avg times using the hashtable ****
@@ -137,7 +136,8 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish() {
                 alert();
                 cancel();
-                isDone = true;
+                //isDone = true;
+                finishAndRemoveTask();
                 startActivity(warn);
             }
         } .start();
