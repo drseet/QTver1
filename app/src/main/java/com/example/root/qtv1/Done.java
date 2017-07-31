@@ -5,21 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Done extends AppCompatActivity {
+public class Done extends MainActivity {
 
-    TextView duration = (TextView)findViewById(R.id.time);
+    //TextView duration = (TextView)findViewById(R.id.time);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_done);
-        setDuration();
     }
+
+    //get file containing the time
     public void setDuration(){
-        MainActivity main = new MainActivity();
-        int dur = main.qt_mins;
-        duration.setText(dur);
+        Toast.makeText(getApplicationContext(), this.qt_mins+
+                " / "+ this.usr, Toast.LENGTH_LONG).show();
+
     }
 
 

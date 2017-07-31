@@ -21,10 +21,10 @@ import java.util.Calendar;
 import java.util.Hashtable;
 
 //flags when first countdown timer has finished (3 min warning)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Login {
 
-    Login log = new Login();
-    String username = this.log.usr;
+    //Login log = new Login();
+    //String username = this.log.usr;
     int qt_mins = 0;
 
     @Override
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 if(quietTimes.containsKey("qt" + ++i) == false);
                     quietTimes.put("qt"+i, time);
 
-        storeTime(quietTimes, this.username);
+        storeTime(quietTimes, this.usr);
     }
     public void storeTime(Hashtable quietTimes, String username) {
         try {
