@@ -29,6 +29,7 @@ public class ThreeMinWarning extends AppCompatActivity {
                 public void onTick(long millisUntilFinished) {}
                 public void onFinish() {
                     alert();
+                    finishAndRemoveTask();
                     startActivity(done);
                 }
             }.start();

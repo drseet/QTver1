@@ -20,13 +20,12 @@ import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.Hashtable;
 
-
+//flags when first countdown timer has finished (3 min warning)
 public class MainActivity extends AppCompatActivity {
 
-    //flags when first countdown timer has finished (3 min warning)
-    boolean isDone = false;
     Login log = new Login();
     String username = this.log.usr;
+    int qt_mins = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
     user on the home screen). Screen changes and informs user that quiet time is in
     progress. CountDownTimer runs until 3 minutes before Quiet Time is set to end, and
     initiates the 3 minute warning and changes screens to inform user this has occurred.
-    Currently, the app only supports Quiet Time for >1 hr and prompts once @ 3 minute
-    warning mark.
+    Currently, the app only supports Quiet Time for >1 hr and prompts at the beginning,
+    3 minute warning, and ~30 seconds before the time chosen
     */
     public void onStartTap(View v) {
         TimePicker timePick;
@@ -106,13 +105,14 @@ public class MainActivity extends AppCompatActivity {
 
         //minute in which quiet time ends
         int endMin = timePick.getCurrentMinute();
-        //the current time in mins
+
+        //the current time in mins and hours
         int curMin = c.get(Calendar.MINUTE);
 
         Intent qt = new Intent(MainActivity.this, QT.class);
         startActivity(qt);
 
-        int qt_mins = endMin - curMin;
+        qt_mins = endMin - curMin;
         //if user does not specify a valid time, 15 min default
         if(qt_mins <= 0){
             qt_mins = 15;
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         recordTime(qt_mins);
 
-        //signify the beginning of QT       (*****maybe change from ringtone?*****)
+        //signify the beginning of QT
         alert();
 
         new CountDownTimer(qt_mins, 1000){
@@ -136,26 +136,11 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish() {
                 alert();
                 cancel();
-                //isDone = true;
                 finishAndRemoveTask();
                 startActivity(warn);
             }
         } .start();
 
-/*
-This currently isn't working, and really isn't necessary. Keeping it here in case it becomes relevant
-in the future.
-
-        if(this.isDone == true) {
-            new CountDownTimer(180000, 1000) {
-                public void onTick(long millisUntilFinished) {}
-                public void onFinish() {
-                    alert();
-                    setContentView(R.layout.activity_main);
-                }
-            }.start();
-        }
-*/
     }
 
 }
