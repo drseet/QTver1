@@ -15,6 +15,7 @@ public class Done extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_done);
+        setDuration();
     }
 
     //get file containing the time
@@ -32,7 +33,4 @@ public class Done extends MainActivity {
 
     }
 
-    public void onQuitTap(View v) {
-        System.exit(0);
-    }
 }
