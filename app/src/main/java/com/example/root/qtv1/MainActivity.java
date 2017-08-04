@@ -26,6 +26,7 @@ public class MainActivity extends Login {
     //Login log = new Login();
     //String username = this.log.usr;
     int qt_mins = 0;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +58,7 @@ public class MainActivity extends Login {
     */
     public void recordTime(int time) {
         int i = 0;
-
-        Hashtable<String, Integer> quietTimes =
-                new Hashtable<>();
+        Hashtable<String, Integer> quietTimes = new Hashtable<>();
 
         /*
         keeping track of each quiet time session (qt) and use an iterator (i)
@@ -67,10 +66,10 @@ public class MainActivity extends Login {
         */
         if(quietTimes.containsKey("qt1"))
             while(!quietTimes.isEmpty())
-                if(quietTimes.containsKey("qt" + ++i) == false);
+                if(!quietTimes.containsKey("qt" + ++i));
                     quietTimes.put("qt"+i, time);
 
-        storeTime(quietTimes, this.usr);
+        storeTime(quietTimes, usr);
     }
     public void storeTime(Hashtable quietTimes, String username) {
         try {
