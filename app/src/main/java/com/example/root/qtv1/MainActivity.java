@@ -84,10 +84,6 @@ public class MainActivity extends Login {
         }
     }
 
-    // **** add method to collect total and avg times using the hashtable ****
-
-
-
     /*
     When the user taps the start button, Calendar is used to collect the current time
     and TimePicker is used to collect the time that Quiet Time should end (specified by
