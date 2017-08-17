@@ -23,8 +23,6 @@ import java.util.Hashtable;
 //flags when first countdown timer has finished (3 min warning)
 public class MainActivity extends Login {
 
-    //Login log = new Login();
-    //String username = this.log.usr;
     int qt_mins = 0;
     int i = 0;
 
@@ -67,7 +65,8 @@ public class MainActivity extends Login {
         if(quietTimes.containsKey("qt1"))
             while(!quietTimes.isEmpty())
                 if(!quietTimes.containsKey("qt" + ++i));
-                    quietTimes.put("qt"+i, time);
+                    quietTimes.put("qt"+i, time); Toast.makeText(getApplicationContext(),  //remove*******
+                                                time+" / "+ i , Toast.LENGTH_LONG).show();
 
         storeTime(quietTimes, usr);
     }
