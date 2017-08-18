@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.Toast;
 
 /*
@@ -13,13 +14,21 @@ Button that will cancel the timer and go back to the home screen.
 */
 public class QT extends AppCompatActivity {
 
+    Chronometer chron;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qt);
+        chron = (Chronometer) findViewById(R.id.chron);
+        chron.start();
+
     }
+
+    // add onStop and onResume?? persistence for chron
+
     public void onStopTap(View v) {
+        chron.stop();
         Toast stopped = Toast.makeText(getApplicationContext(), "Timer Stopped", Toast.LENGTH_LONG);
         stopped.show();
         Intent home = new Intent(QT.this, MainActivity.class);

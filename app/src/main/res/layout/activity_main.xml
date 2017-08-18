@@ -52,16 +52,16 @@
 
     <TextView
         android:id="@+id/sound_remind"
-        android:layout_width="223dp"
-        android:layout_height="14dp"
-        android:text="Remember to turn your sound on!"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="232dp"
+        android:layout_height="25dp"
         android:layout_marginTop="40dp"
+        android:text="    Remember to turn your sound on!"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start_button"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <Button
         android:id="@+id/help_button"
