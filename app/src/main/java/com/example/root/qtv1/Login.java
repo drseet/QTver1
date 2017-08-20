@@ -2,8 +2,10 @@ package com.example.root.qtv1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,12 +19,14 @@ import java.security.NoSuchAlgorithmException;
 
 import static com.example.root.qtv1.R.id.pass;
 
-public class Login extends AppCompatActivity {
+public class Login extends User {
 
     String usr, pw;
     EditText emailInput, passInput;
     MessageDigest md;
     Button adminButton;
+    public static final String PREF_NAME = "USER_PREF";
+    public static final String PREF_KEY = "USER_PREF_KEY";
 
 
     @Override
@@ -76,7 +80,22 @@ public class Login extends AppCompatActivity {
         Intent admin = new Intent(Login.this, Admin.class);
         startActivity(admin);
     }
-
+    protected void saveUser(Context context, String user) {
+        SharedPreferences pref;
+        SharedPreferences.Editor edit;
+        pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        edit = pref.edit();
+        edit.putString(PREF_KEY, user);
+        edit.commit();
+        Log.v("QT", user + " saved");
+    }
+    protected String getCurrentUser(Context context) {
+        SharedPreferences pref;
+        String user;
+        pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        user = pref.getString(PREF_KEY, null);
+        return user;
+    }
 
     public void onLoginTap(View v) {
 
@@ -98,6 +117,7 @@ public class Login extends AppCompatActivity {
             test.show();
         }
         else{
+            saveUser(getApplicationContext(), usr);
             Intent start = new Intent(Login.this, MainActivity.class);
             startActivity(start);
         }

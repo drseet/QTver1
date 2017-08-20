@@ -1,24 +1,15 @@
 package com.example.root.qtv1;
 
-import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.Calendar;
-import java.util.Hashtable;
 
 //flags when first countdown timer has finished (3 min warning)
 public class MainActivity extends Login {
@@ -50,38 +41,7 @@ public class MainActivity extends Login {
             e.printStackTrace();
         }
     }
-    /*
-    Records time and stored in Hashtable and passes the hashtable to be stored
-    in a private file on the device.
-    */
-    public void recordTime(int time) {
-        int i = 0;
-        Hashtable<String, Integer> quietTimes = new Hashtable<>();
 
-        /*
-        keeping track of each quiet time session (qt) and use an iterator (i)
-        to determine what session we're on so we know where to hash the data
-        */
-        if(quietTimes.containsKey("qt1"))
-            while(!quietTimes.isEmpty())
-                if(!quietTimes.containsKey("qt" + ++i));
-                    quietTimes.put("qt"+i, time); Toast.makeText(getApplicationContext(),  //remove*******
-                                                time+" / "+ i , Toast.LENGTH_LONG).show();
-
-        storeTime(quietTimes, usr);
-    }
-    public void storeTime(Hashtable quietTimes, String username) {
-        try {
-            FileOutputStream fos = openFileOutput(username+"_qt_records", Context.MODE_PRIVATE);
-            ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(quietTimes);
-            os.close();
-            Log.v("QT", "File written");
-        }catch (IOException e){
-            e.printStackTrace();
-            Log.v("QT", "File not written");
-        }
-    }
 
     /*
     When the user taps the start button, Calendar is used to collect the current time
@@ -119,7 +79,13 @@ public class MainActivity extends Login {
         // to occur before the class bell
         qt_mins = qt_mins - 45000;
 
-        recordTime(qt_mins);
+        String username = getCurrentUser(getApplicationContext());
+        if(this.usr == null) {
+            Log.v("QT","usr is null!");
+            return;
+        }
+        User user = getUser(username);
+        updateUser(getApplicationContext(), user, qt_mins);
 
         //signify the beginning of QT
         alert();
