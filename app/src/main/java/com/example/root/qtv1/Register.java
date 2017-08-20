@@ -1,21 +1,15 @@
 package com.example.root.qtv1;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Register extends AppCompatActivity {
+public class Register extends StorageUtil {
 
     String usr, pw, pw2;
     EditText emailInput, passInput, passInput2;
@@ -31,43 +25,25 @@ public class Register extends AppCompatActivity {
         passInput2 = (EditText) findViewById(R.id.pass_input2);
     }
 
-    //used to hash the user's password
-    private String hash(String input) {
+    /*
+        protected void storeUser(String user, String pw) {
+            //note: set filename as username for ease and such
 
-        try{
-            md = MessageDigest.getInstance("SHA-256");
-            md.update(input.getBytes());
-            byte result[] = md.digest();
-            StringBuilder sb = new StringBuilder();
-
-            for(int i = 0; i< result.length; ++i)
-                sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
-
-            return sb.toString();
-        }catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace(System.out);
+            //if no password entered, return
+            if(pw == null)
+                return;
+            //hash password
+            pw = hash(pw);
+            //save password
+            try {
+                FileOutputStream fos = openFileOutput(user, Context.MODE_PRIVATE);
+                fos.write(pw.getBytes());
+                fos.close();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
         }
-        return null;
-    }
-
-    private void storeUser(String user, String pw) {
-        //note: set filename as username for ease and such
-
-        //if no password entered, return
-        if(pw == null)
-            return;
-        //hash password
-        pw = hash(pw);
-        //save password
-        try {
-            FileOutputStream fos = openFileOutput(user, Context.MODE_PRIVATE);
-            fos.write(pw.getBytes());
-            fos.close();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
+    */
     public void onRegTap(View v){
         usr = new String();
         pw = new String();
@@ -88,11 +64,13 @@ public class Register extends AppCompatActivity {
         else {
             //collect user password
             pw = passInput.getText().toString();
+            pw = hash(pw);
+
 
             //save username and password in private file
             storeUser(usr, pw);
 
-            Toast.makeText(getApplicationContext(), "stored!", Toast.LENGTH_LONG);
+            Log.v("Reg", "user stored");
 
             //return to login screen
             Intent ret = new Intent(Register.this, Login.class);

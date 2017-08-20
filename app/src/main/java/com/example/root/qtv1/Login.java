@@ -19,7 +19,7 @@ import java.security.NoSuchAlgorithmException;
 
 import static com.example.root.qtv1.R.id.pass;
 
-public class Login extends User {
+public class Login extends StorageUtil {
 
     String usr, pw;
     EditText emailInput, passInput;
@@ -41,32 +41,9 @@ public class Login extends User {
 
     }
 
-    //used to hash the user's password
-    private String hash(String input) {
-
-        try{
-            md = MessageDigest.getInstance("SHA-256");
-            md.update(input.getBytes());
-            byte result[] = md.digest();
-            StringBuilder sb = new StringBuilder();
-
-            for(int i = 0; i< result.length; ++i)
-                sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
-            
-            return sb.toString();
-        }catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace(System.out);
-        }
-        return null;
-    }
-
     private boolean userFound(Context context, String username) {
         File file = context.getFileStreamPath(username);
-        if(file.exists()){
-            return true;
-        }
-        else
-            return false;
+        return file.exists();
     }
 
     //handles account registration when user taps 'create an account'
@@ -87,7 +64,7 @@ public class Login extends User {
         edit = pref.edit();
         edit.putString(PREF_KEY, user);
         edit.commit();
-        Log.v("QT", user + " saved");
+        Log.v("Login", user + " pref saved");
     }
     protected String getCurrentUser(Context context) {
         SharedPreferences pref;
@@ -117,6 +94,7 @@ public class Login extends User {
             test.show();
         }
         else{
+            //save current username in shared pref
             saveUser(getApplicationContext(), usr);
             Intent start = new Intent(Login.this, MainActivity.class);
             startActivity(start);
