@@ -25,8 +25,6 @@ public class QT extends AppCompatActivity {
 
     }
 
-    // add onStop and onResume?? persistence for chron
-
     public void onStopTap(View v) {
         chron.stop();
         Toast stopped = Toast.makeText(getApplicationContext(), "Timer Stopped", Toast.LENGTH_LONG);
@@ -35,4 +33,5 @@ public class QT extends AppCompatActivity {
         startActivity(home);
 
     }
+
 }

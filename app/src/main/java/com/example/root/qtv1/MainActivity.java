@@ -6,11 +6,9 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import java.util.Calendar;
 
 //flags when first countdown timer has finished (3 min warning)
@@ -18,6 +16,7 @@ public class MainActivity extends Login {
 
     int qt_mins = 0;
     int i = 0;
+    CountDownTimer ct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +75,10 @@ public class MainActivity extends Login {
         if(qt_mins <= 0){
             qt_mins = 15;
         }
+
+        String username = getCurrentUser(getApplicationContext());
+        storeUserStats(username, qt_mins);
+
         //subtract 3 minutes and convert to milliseconds
         qt_mins = qt_mins - 3;
         qt_mins = qt_mins*60000;
@@ -84,14 +87,10 @@ public class MainActivity extends Login {
         // to occur before the class bell
         qt_mins = qt_mins - 45000;
 
-        String username = getCurrentUser(getApplicationContext());
-        //store QT data call storeUserStats
-        storeUserStats(username, qt_mins);
-
         //signify the beginning of QT
         alert();
 
-        new CountDownTimer(qt_mins, 1000){
+        ct = new CountDownTimer(qt_mins, 1000) {
             Intent warn = new Intent(MainActivity.this, ThreeMinWarning.class);
             public void onTick(long millisUntilFinished) {}
             public void onFinish() {
