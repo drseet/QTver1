@@ -8,7 +8,6 @@ import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import java.util.Calendar;
 
 //flags when first countdown timer has finished (3 min warning)
@@ -43,7 +42,6 @@ public class MainActivity extends Login {
         }
     }
 
-
     /*
     When the user taps the start button, Calendar is used to collect the current time
     and TimePicker is used to collect the time that Quiet Time should end (specified by
@@ -66,9 +64,6 @@ public class MainActivity extends Login {
 
         Intent qt = new Intent(MainActivity.this, QT.class);
         startActivity(qt);
-
-        Toast.makeText(getApplicationContext(),
-                endMin + " / " + curMin, Toast.LENGTH_LONG);            //ERROR CHECK
 
         qt_mins = endMin - curMin;
         //if user does not specify a valid time, 15 min default

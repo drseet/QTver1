@@ -136,6 +136,7 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
         }
     }
 
+    //store quiet time stats in private files
     protected void storeUserStats(String username, int duration) {
         storeTotal(username, duration);
         storeSessionCount(username);

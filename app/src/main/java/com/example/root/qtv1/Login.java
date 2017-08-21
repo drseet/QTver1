@@ -23,10 +23,12 @@ public class Login extends StorageUtil {
 
     String usr, pw;
     EditText emailInput, passInput;
-    MessageDigest md;
     Button adminButton;
     public static final String PREF_NAME = "USER_PREF";
     public static final String PREF_KEY = "USER_PREF_KEY";
+    public static final String TIME_PREF_NAME = "TIME_PREF";
+    public static final String TIME_PREF_KEY = "TIME_PREF_KEY";
+
 
 
     @Override
