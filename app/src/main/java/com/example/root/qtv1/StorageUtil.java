@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -73,23 +71,36 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
 
     protected void storeUserStats(String username, int duration) {
         File file = getFileStreamPath(username);
-        if (file.exists()) {
-            //try{
-            //FileOutputStream fos = openFileOutput(username + "_qt_total", Context.MODE_PRIVATE);
-            //fos.write();
-            //}catch (IOException e){
+        int total;
 
-            //}
+        if (file.exists()) {
             file = getFileStreamPath(username + "_qt_total");
             if (file.exists()) {
                 //get int from file and add duration to it- delete old file and create new with sum
+                try {
+                    //pull previous number from total file, close and delete the file
+                    FileInputStream fis = openFileInput(username + "_qt_total");
+                    total = fis.read();
+                    fis.close();
+                    file.delete();
+
+                    //add the duration of current quiet time to the total,
+                    //open/create file and save data
+                    total += duration;
+                    FileOutputStream fos = openFileOutput(username + "_qt_total", Context.MODE_PRIVATE);
+                    fos.write(total);
+                    fos.close();
+                    Log.v("storage", "total saved as: " + total);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.v("storage", "ERROR: not able to save total");
+                }
+                //do same with sessions(add 1) and replace avg
+            } else {
+                Log.v("Storage", username + " file not found!");
             }
-            //do same with sessions(add 1) and replace avg
-        } else {
-            Log.v("Storage", username + " file not found!");
         }
     }
-
     /*
         protected void storeUser(User user) {
             if(user == null){

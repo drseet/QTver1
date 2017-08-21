@@ -86,6 +86,7 @@ public class MainActivity extends Login {
 
         String username = getCurrentUser(getApplicationContext());
         //store QT data call storeUserStats
+        storeUserStats(username, qt_mins);
 
         //signify the beginning of QT
         alert();
