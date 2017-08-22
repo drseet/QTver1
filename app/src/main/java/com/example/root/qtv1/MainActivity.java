@@ -56,16 +56,25 @@ public class MainActivity extends Login {
         timePick = (TimePicker) findViewById(R.id.timePicker);
         Calendar c = Calendar.getInstance();
 
-        //minute in which quiet time ends
+        //minute, hour in which quiet time ends
         int endMin = timePick.getCurrentMinute();
+        int endHour = timePick.getCurrentHour();
 
         //the current time in mins and hours
         int curMin = c.get(Calendar.MINUTE);
+        int curHour = c.get(Calendar.HOUR_OF_DAY);
 
         Intent qt = new Intent(MainActivity.this, QT.class);
         startActivity(qt);
 
+        //handle cases where the time is in the next hour
+        if (curHour < endHour) {
+            qt_mins = 60 - endMin;
+        }
+
+        //otherwise, the duration in mins of quiet time is set
         qt_mins = endMin - curMin;
+
         //if user does not specify a valid time, 15 min default
         if(qt_mins <= 0){
             qt_mins = 15;
