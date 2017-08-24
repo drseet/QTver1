@@ -95,7 +95,7 @@ public class Login extends StorageUtil {
                     "Username not found! Please create an account", Toast.LENGTH_LONG);
             test.show();
         }
-        //check password?
+        //check password? ************************************************************
         else{
             //save current username in shared pref
             saveUser(getApplicationContext(), usr);

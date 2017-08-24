@@ -158,6 +158,9 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
         }
     }
 
+    //getter functions for each stat *********************************************
+
+
     //store quiet time stats in private files
     protected void storeUserStats(String username, int duration) {
         storeTotal(username, duration);
@@ -166,10 +169,5 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
 
     }
 
-    protected void deleteUser(String username) {
-        File file = getApplicationContext().getFileStreamPath(username);
-        if (file.exists())
-            deleteFile(username);
-    }
 
 }
