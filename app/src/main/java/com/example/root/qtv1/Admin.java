@@ -43,12 +43,7 @@ public class Admin extends MainActivity {
     }
 
     public void onShowStatsTap(View v) {
-        //make the labels and header visible
-        qt_header.setVisibility(View.VISIBLE);
-        total.setVisibility(View.VISIBLE);
-        sessionCount.setVisibility(View.VISIBLE);
-        avg.setVisibility(View.VISIBLE);
-
+        //use getter functions to gather qt info and display
 
     }
 

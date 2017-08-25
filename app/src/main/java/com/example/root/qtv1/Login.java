@@ -26,7 +26,6 @@ public class Login extends StorageUtil {
         setContentView(R.layout.activity_login);
 
         emailInput = (EditText) findViewById(R.id.email);
-        adminButton = (Button) findViewById(R.id.admin_button);
 
 
     }
