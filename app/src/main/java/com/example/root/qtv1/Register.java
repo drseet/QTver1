@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
-import java.security.MessageDigest;
+
 
 public class Register extends StorageUtil {
 
@@ -17,20 +16,19 @@ public class Register extends StorageUtil {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         emailInput = (EditText) findViewById(R.id.email_input);
     }
 
     public void onRegTap(View v){
-        String usr;
+        //usr = new String();
 
 
         //collect user input
         usr = emailInput.getText().toString();
 
-        //save username and password in private file
-        storeUser(usr);
-        Log.v("Reg", "user stored");
+        //save username and password in private file (removed password functionality for now)
+        storeUser(usr, null);
+        Log.v("Reg", "user stored" + usr);
 
         //return to login screen
         Intent ret = new Intent(Register.this, Login.class);

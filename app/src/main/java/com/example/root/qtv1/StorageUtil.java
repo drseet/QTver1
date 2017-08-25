@@ -3,7 +3,6 @@ package com.example.root.qtv1;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,7 +19,7 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
     MessageDigest md;
     int total, sessions;
 
-    //used to hash the user's password
+    // used to hash the user's password
     protected String hash(String input) {
 
         try {
@@ -39,13 +38,20 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
         return null;
     }
 
-    protected void storeUser(String user) {
-        // note: set filename as username for ease and such
+    protected void storeUser(String user, String pw) {
+        // set filename as username for ease and such
 
+        // note: pw functionality removed for now, as it is currently extraneous
+        if (pw == null)
+            pw = "default";
+        // hash password
+        pw = hash(pw);
+        // save password
         try {
-            FileOutputStream fos;
-
-            //create files to store QT stats
+            FileOutputStream fos = openFileOutput(user, Context.MODE_PRIVATE);
+            fos.write(pw.getBytes());
+            fos.close();
+            // create files to store QT stats
             fos = openFileOutput(user + "_qt_total", Context.MODE_PRIVATE);
             fos.write(0);
             fos.close();
@@ -70,16 +76,16 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
         if (file.exists()) {
             file = getFileStreamPath(username + "_qt_total");
             if (file.exists()) {
-                //get int from file and add duration to it- delete old file and create new with sum
+                // get int from file and add duration to it- delete old file and create new with sum
                 try {
-                    //pull previous number from total file, convert to mins, close and delete the file
+                    // pull previous number from total file, convert to mins, close and delete the file
                     FileInputStream fis = openFileInput(username + "_qt_total");
                     total = fis.read();
                     Log.v("StorageTotal", "total = " + total);
                     fis.close();
                     deleteFile(username + "_qt_total");
-                    //add the duration of current quiet time to the total, convert to mins,
-                    //open/create file and save data
+                    // add the duration of current quiet time to the total, convert to mins,
+                    // open/create file and save data
                     total += duration;
                     FileOutputStream fos = openFileOutput(username + "_qt_total", Context.MODE_PRIVATE);
                     fos.write(total);
@@ -102,15 +108,15 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
         if (file.exists()) {
             file = getFileStreamPath(username + "_qt_sessions");
             if (file.exists()) {
-                //get int from file and add 1 to it- delete old file and create new with sum
+                // get int from file and add 1 to it- delete old file and create new with sum
                 try {
-                    //pull previous number from total file (+1) close and delete the file
+                    // pull previous number from total file (+1) close and delete the file
                     FileInputStream fis = openFileInput(username + "_qt_sessions");
                     sessions = ((fis.read()) + 1);
                     fis.close();
                     deleteFile(username + "_qt_sessions");
 
-                    //open/create file and save updated session data
+                    // open/create file and save updated session data
                     FileOutputStream fos = openFileOutput(username + "_qt_sessions", Context.MODE_PRIVATE);
                     fos.write(sessions);
                     fos.close();
@@ -131,6 +137,8 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
     new avg data
     */
     protected void storeSessionAvg(String username) {
+        if (sessions == 0)
+            ++sessions;
         int avg = this.total / this.sessions;
 
         Log.v("Storage", "avg: " + avg);
@@ -151,10 +159,10 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
         }
     }
 
-    //getter functions for each stat *********************************************
+    // getter functions for each stat *********************************************
 
 
-    //store quiet time stats in private files
+    // store quiet time stats in private files
     protected void storeUserStats(String username, int duration) {
         storeTotal(username, duration);
         storeSessionCount(username);

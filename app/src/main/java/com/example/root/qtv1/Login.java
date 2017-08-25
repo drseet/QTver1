@@ -15,7 +15,6 @@ public class Login extends StorageUtil {
 
     String usr;
     EditText emailInput;
-    Button adminButton;
     public static final String PREF_NAME = "USER_PREF";
     public static final String PREF_KEY = "USER_PREF_KEY";
 
@@ -26,7 +25,6 @@ public class Login extends StorageUtil {
         setContentView(R.layout.activity_login);
 
         emailInput = (EditText) findViewById(R.id.email);
-        adminButton = (Button) findViewById(R.id.admin_button);
 
 
     }
@@ -43,11 +41,7 @@ public class Login extends StorageUtil {
         startActivity(reg);
     }
 
-    // queues up admin screen
-    public void onAdminTap(View v) {
-        Intent admin = new Intent(Login.this, Admin.class);
-        startActivity(admin);
-    }
+
     protected void saveUser(Context context, String user) {
         SharedPreferences pref;
         SharedPreferences.Editor edit;
@@ -69,13 +63,6 @@ public class Login extends StorageUtil {
 
         if (emailInput != null) {
             usr = emailInput.getText().toString();
-        }
-
-        // check if admin, if admin: delete user button visible --------> move to main screen ******
-        if (usr.equals("admin")) {
-            //make delete user/ admin button visible to allow user to access admin screen
-            adminButton.setVisibility(View.VISIBLE);
-
         }
 
         if (!userFound(getApplicationContext(), usr)) {

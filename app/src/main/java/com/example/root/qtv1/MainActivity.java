@@ -6,7 +6,9 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TimePicker;
 import java.util.Calendar;
 
@@ -14,13 +16,26 @@ import java.util.Calendar;
 public class MainActivity extends Login {
 
     int qt_mins = 0;
-    int i = 0;
     CountDownTimer ct;
+    Button adminButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        adminButton = (Button) findViewById(R.id.admin_button);
+        String username = getCurrentUser(getApplicationContext());
+        Log.v("Main", "current username: " + username);
+        if (username == "admin")
+            adminButton.setVisibility(View.VISIBLE);
+
+    }
+
+    // queues up admin screen
+    public void onAdminTap(View v) {
+        Intent admin = new Intent(MainActivity.this, Admin.class);
+        startActivity(admin);
     }
 
     public void onHelpTap(View v) {
