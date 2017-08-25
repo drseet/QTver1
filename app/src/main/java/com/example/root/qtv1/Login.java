@@ -15,7 +15,6 @@ public class Login extends StorageUtil {
 
     String usr;
     EditText emailInput;
-    Button adminButton;
     public static final String PREF_NAME = "USER_PREF";
     public static final String PREF_KEY = "USER_PREF_KEY";
 
@@ -64,7 +63,7 @@ public class Login extends StorageUtil {
         if (emailInput != null) {
             usr = emailInput.getText().toString();
         }
-
+        Log.v("Login", "username: " + usr);
         // check if admin, if admin go to admin screen
         if (usr.equals("admin")) {
             Intent admin = new Intent(Login.this, Admin.class);

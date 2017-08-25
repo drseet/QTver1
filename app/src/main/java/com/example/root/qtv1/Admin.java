@@ -31,7 +31,7 @@ public class Admin extends MainActivity {
         avg = (TextView) findViewById(R.id.avg);
         total_val = (TextView) findViewById(R.id.total_value);
         session_val = (TextView) findViewById(R.id.session_value);
-        avg_val = (TextView) findViewById(R.id.avg);
+        avg_val = (TextView) findViewById(R.id.avg_value);
         qt_header = (TextView) findViewById(R.id.qt_stats_header);
 
 
@@ -43,18 +43,18 @@ public class Admin extends MainActivity {
     }
 
     public void onShowStatsTap(View v) {
-        //use getter functions to gather qt info and display
+        // use getter functions to gather qt info and display
 
     }
 
     public void deleteUser(Context context, String username) {
-        //handle separate method
+        // handle separate method
         File file = context.getFileStreamPath(username);
         if(file.exists())
             deleteFile(username);
     }
 
-    //deletes file for user specified
+    // deletes file for user specified
     public void onDeleteTap(View v) {
 
         deleteUser(getApplicationContext(), username);
@@ -63,7 +63,7 @@ public class Admin extends MainActivity {
                 + " Deleted!", Toast.LENGTH_SHORT).show();
     }
 
-    //returns to the home screen
+    // returns to the home screen
     public void onReturnTap(View v) {
         Intent ret = new Intent(Admin.this, MainActivity.class);
         startActivity(ret);
