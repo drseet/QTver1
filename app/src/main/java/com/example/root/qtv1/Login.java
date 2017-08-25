@@ -17,14 +17,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 import static com.example.root.qtv1.R.id.pass;
 import static com.example.root.qtv1.R.id.username;
 
 public class Login extends StorageUtil {
 
-    String usr, pw;
-    EditText emailInput, passInput;
+    String usr;
+    EditText emailInput;
     Button adminButton;
     public static final String PREF_NAME = "USER_PREF";
     public static final String PREF_KEY = "USER_PREF_KEY";
@@ -36,7 +37,6 @@ public class Login extends StorageUtil {
         setContentView(R.layout.activity_login);
 
         emailInput = (EditText) findViewById(R.id.email);
-        passInput = (EditText) findViewById(pass);
         adminButton = (Button) findViewById(R.id.admin_button);
 
 
@@ -47,10 +47,6 @@ public class Login extends StorageUtil {
         File file = context.getFileStreamPath(username);
         return file.exists();
     }
-
-    // returns true if user file contents (containing hashed password) is equal to the
-    // password entered by the user
-
 
     // handles account registration when user taps 'create an account'
     public void onRegTap(View v) {
@@ -84,29 +80,20 @@ public class Login extends StorageUtil {
 
         if (emailInput != null) {
             usr = emailInput.getText().toString();
-            if (passInput != null)
-                pw = passInput.getText().toString();
         }
 
         // check if admin, if admin: delete user button visible --------> move to main screen ******
-        if (usr == "admin" && pw == "admin") {
+        if (usr.equals("admin")) {
             //make delete user/ admin button visible to allow user to access admin screen
             adminButton.setVisibility(View.VISIBLE);
 
         }
+
         if (!userFound(getApplicationContext(), usr)) {
             Toast test = Toast.makeText(getApplicationContext(),
                     "Username not found! Please create an account", Toast.LENGTH_LONG);
             test.show();
-        }
-        //check password ************************************************************
-/*
-        if(!passMatch(getApplicationContext(), usr, pw)) {
-            Toast.makeText(getApplicationContext(),
-                    "Password incorrect! Please try again!", Toast.LENGTH_LONG);
-        }
-*/
-        else{
+        } else {
             // save current username in shared pref and move to main screen
             saveUser(getApplicationContext(), usr);
             Intent start = new Intent(Login.this, MainActivity.class);

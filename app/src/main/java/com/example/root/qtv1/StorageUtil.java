@@ -39,19 +39,12 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
         return null;
     }
 
-    protected void storeUser(String user, String pw) {
-        //note: set filename as username for ease and such
+    protected void storeUser(String user) {
+        // note: set filename as username for ease and such
 
-        //if no password entered, return
-        if (pw == null)
-            return;
-        //hash password
-        pw = hash(pw);
-        //save password
         try {
-            FileOutputStream fos = openFileOutput(user, Context.MODE_PRIVATE);
-            fos.write(pw.getBytes());
-            fos.close();
+            FileOutputStream fos;
+
             //create files to store QT stats
             fos = openFileOutput(user + "_qt_total", Context.MODE_PRIVATE);
             fos.write(0);
