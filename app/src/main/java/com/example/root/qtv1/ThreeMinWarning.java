@@ -16,7 +16,9 @@ This screen notifies the user that there are 3 minutes left until the end of Qui
 User can return to the home screen or exit the application.
 */
 
-public class ThreeMinWarning extends AppCompatActivity {
+public class ThreeMinWarning extends MainActivity {
+
+    CountDownTimer ct2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,7 @@ public class ThreeMinWarning extends AppCompatActivity {
         setContentView(R.layout.activity_three_min_warning);
 
         //final alert before class bell (~30 sec prior)
-            new CountDownTimer(160000, 1000) {
+        ct2 = new CountDownTimer(160000, 1000) {
                 Intent done = new Intent(ThreeMinWarning.this, Done.class);
                 public void onTick(long millisUntilFinished) {}
                 public void onFinish() {
@@ -36,13 +38,12 @@ public class ThreeMinWarning extends AppCompatActivity {
         }
 
     public void onReturnTap(View v) {
+        if (ct2 != null)
+            ct2.cancel();
         Intent home = new Intent(ThreeMinWarning.this, MainActivity.class);
         startActivity(home);
     }
 
-    public void onQuitTap(View v) {
-        System.exit(1);
-    }
 
     public void alert() {
         try {

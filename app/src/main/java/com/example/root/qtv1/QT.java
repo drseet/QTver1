@@ -28,7 +28,8 @@ public class QT extends MainActivity {
 
     public void onStopTap(View v) {
         chron.stop();
-        ct.cancel();
+        if (ct != null)
+            ct.cancel();
         Toast stopped = Toast.makeText(getApplicationContext(), "Timer Stopped", Toast.LENGTH_LONG);
         stopped.show();
         Intent home = new Intent(QT.this, MainActivity.class);

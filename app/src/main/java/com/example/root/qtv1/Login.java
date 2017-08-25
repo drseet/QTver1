@@ -12,12 +12,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import static com.example.root.qtv1.R.id.pass;
+import static com.example.root.qtv1.R.id.username;
 
 public class Login extends StorageUtil {
 
@@ -26,9 +28,6 @@ public class Login extends StorageUtil {
     Button adminButton;
     public static final String PREF_NAME = "USER_PREF";
     public static final String PREF_KEY = "USER_PREF_KEY";
-    public static final String TIME_PREF_NAME = "TIME_PREF";
-    public static final String TIME_PREF_KEY = "TIME_PREF_KEY";
-
 
 
     @Override
@@ -43,18 +42,23 @@ public class Login extends StorageUtil {
 
     }
 
+    // return true if user file has been created and is stored on device
     private boolean userFound(Context context, String username) {
         File file = context.getFileStreamPath(username);
         return file.exists();
     }
 
-    //handles account registration when user taps 'create an account'
+    // returns true if user file contents (containing hashed password) is equal to the
+    // password entered by the user
+
+
+    // handles account registration when user taps 'create an account'
     public void onRegTap(View v) {
         Intent reg = new Intent(Login.this, Register.class);
         startActivity(reg);
     }
 
-    //queues up admin screen
+    // queues up admin screen
     public void onAdminTap(View v) {
         Intent admin = new Intent(Login.this, Admin.class);
         startActivity(admin);
@@ -65,7 +69,7 @@ public class Login extends StorageUtil {
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         edit = pref.edit();
         edit.putString(PREF_KEY, user);
-        edit.commit();
+        edit.apply();
         Log.v("Login", user + " pref saved");
     }
     protected String getCurrentUser(Context context) {
@@ -84,20 +88,26 @@ public class Login extends StorageUtil {
                 pw = passInput.getText().toString();
         }
 
-        //check if admin, if admin: delete user button visible --------> move to main screen ******
+        // check if admin, if admin: delete user button visible --------> move to main screen ******
         if (usr == "admin" && pw == "admin") {
             //make delete user/ admin button visible to allow user to access admin screen
             adminButton.setVisibility(View.VISIBLE);
 
         }
-        if (userFound(getApplicationContext(), usr) == false) {
+        if (!userFound(getApplicationContext(), usr)) {
             Toast test = Toast.makeText(getApplicationContext(),
                     "Username not found! Please create an account", Toast.LENGTH_LONG);
             test.show();
         }
-        //check password? ************************************************************
+        //check password ************************************************************
+/*
+        if(!passMatch(getApplicationContext(), usr, pw)) {
+            Toast.makeText(getApplicationContext(),
+                    "Password incorrect! Please try again!", Toast.LENGTH_LONG);
+        }
+*/
         else{
-            //save current username in shared pref
+            // save current username in shared pref and move to main screen
             saveUser(getApplicationContext(), usr);
             Intent start = new Intent(Login.this, MainActivity.class);
             startActivity(start);

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class Done extends MainActivity {
+public class Done extends ThreeMinWarning {
 
     TextView duration;
 
@@ -19,6 +19,10 @@ public class Done extends MainActivity {
 
 
     public void onHomeTap(View v) {
+        if (ct != null)
+            ct.cancel();
+        if (ct2 != null)
+            ct2.cancel();
         Intent main = new Intent(Done.this, MainActivity.class);
         finishAndRemoveTask();
         startActivity(main);
