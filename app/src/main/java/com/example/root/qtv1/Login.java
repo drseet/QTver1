@@ -15,6 +15,7 @@ public class Login extends StorageUtil {
 
     String usr;
     EditText emailInput;
+    Button adminButton;
     public static final String PREF_NAME = "USER_PREF";
     public static final String PREF_KEY = "USER_PREF_KEY";
 
@@ -25,6 +26,7 @@ public class Login extends StorageUtil {
         setContentView(R.layout.activity_login);
 
         emailInput = (EditText) findViewById(R.id.email);
+        adminButton = (Button) findViewById(R.id.admin_button);
 
 
     }
@@ -40,7 +42,6 @@ public class Login extends StorageUtil {
         Intent reg = new Intent(Login.this, Register.class);
         startActivity(reg);
     }
-
 
     protected void saveUser(Context context, String user) {
         SharedPreferences pref;
@@ -63,6 +64,13 @@ public class Login extends StorageUtil {
 
         if (emailInput != null) {
             usr = emailInput.getText().toString();
+        }
+
+        // check if admin, if admin go to admin screen
+        if (usr.equals("admin")) {
+            Intent admin = new Intent(Login.this, Admin.class);
+            startActivity(admin);
+
         }
 
         if (!userFound(getApplicationContext(), usr)) {
