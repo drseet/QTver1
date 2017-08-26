@@ -42,6 +42,15 @@ public class Admin extends MainActivity {
         // use getter functions to gather qt info and display
         username = usr.getText().toString();
 
+        int qtTotal = getTotal(username);
+        total_val.setText(String.valueOf(qtTotal));
+
+        int qtSessions = getSessions(username);
+        session_val.setText(String.valueOf(qtSessions));
+
+        int qtAvg = getAvg(username);
+        avg_val.setText(String.valueOf(qtAvg));
+
 
     }
 

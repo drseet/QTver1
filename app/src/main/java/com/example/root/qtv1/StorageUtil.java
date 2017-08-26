@@ -159,8 +159,52 @@ class StorageUtil extends AppCompatActivity implements java.io.Serializable {
         }
     }
 
-    // getter functions for each stat *********************************************
+    // getter functions for each stat
+    protected int getTotal(String username) {
+        File file = getFileStreamPath(username);
+        if (!file.exists())
+            return 0;
+        try {
+            FileInputStream fis = openFileInput(username + "_qt_total");
+            total = fis.read();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.v("Storage", "ERROR: can't get total " + total);
+        }
+        return total;
+    }
 
+    protected int getSessions(String username) {
+        File file = getFileStreamPath(username);
+        if (!file.exists())
+            return 0;
+        try {
+            FileInputStream fis = openFileInput(username + "_qt_sessions");
+            sessions = fis.read();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.v("Storage", "ERROR: can't get session count " + sessions);
+        }
+        return sessions;
+    }
+
+    protected int getAvg(String username) {
+        int avg = 0;
+        File file = getFileStreamPath(username);
+        if (!file.exists())
+            return 0;
+        try {
+            FileInputStream fis = openFileInput(username + "_qt_avg");
+            avg = fis.read();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.v("Storage", "ERROR: can't get avg " + avg);
+        }
+        return avg;
+    }
 
     // store quiet time stats in private files
     protected void storeUserStats(String username, int duration) {
