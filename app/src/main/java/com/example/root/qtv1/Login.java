@@ -68,9 +68,7 @@ public class Login extends StorageUtil {
             Intent admin = new Intent(Login.this, Admin.class);
             startActivity(admin);
 
-        }
-
-        if (!userFound(getApplicationContext(), usr)) {
+        } else if (!userFound(getApplicationContext(), usr)) {
             Toast test = Toast.makeText(getApplicationContext(),
                     "Username not found! Please create an account", Toast.LENGTH_LONG);
             test.show();
