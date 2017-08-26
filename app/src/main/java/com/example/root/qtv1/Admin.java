@@ -25,7 +25,7 @@ public class Admin extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
         delete = (Button)findViewById(R.id.delete_button);
-        usr = (EditText)findViewById(R.id.email_input);
+        usr = (EditText) findViewById(R.id.username);
         total = (TextView) findViewById(R.id.total);
         sessionCount = (TextView) findViewById(R.id.session_count);
         avg = (TextView) findViewById(R.id.avg);
@@ -36,19 +36,16 @@ public class Admin extends MainActivity {
 
 
 
-        username = usr.getText().toString();
-
-
-
     }
 
     public void onShowStatsTap(View v) {
         // use getter functions to gather qt info and display
+        username = usr.getText().toString();
+
 
     }
 
     public void deleteUser(Context context, String username) {
-        // handle separate method
         File file = context.getFileStreamPath(username);
         if(file.exists())
             deleteFile(username);
@@ -56,6 +53,7 @@ public class Admin extends MainActivity {
 
     // deletes file for user specified
     public void onDeleteTap(View v) {
+        username = usr.getText().toString();
 
         deleteUser(getApplicationContext(), username);
 
